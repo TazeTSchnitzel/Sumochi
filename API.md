@@ -15,6 +15,23 @@ API Methods
 `api_login`
 -----------
 
+###Example
+
+`http://smoke.ajf.me/`
+`?p=api_login`
+`&user=joe`
+`&password=foobar`
+`&key=SERVER_SECRET_KEY`
+
+(hopefully) resulting in:
+
+    {
+        "result": {
+            "token": "XXX123"
+        },
+        "errors": []
+    }
+
 ###Parameters
 
 * `user` - username of user to log in for
@@ -34,6 +51,23 @@ If it succeeds, `result` will be a JSON object with a single key, `token`, the l
 
 `api_give_achievement`
 ----------------------
+
+###Example
+
+`http://smoke.ajf.me/`
+`?p=api_give_achievement`
+`&user=joe`
+`&token=XXX13`
+`&a_key=SERVER_SECRET_KEY`
+`&a_id=joesmod_1`
+`&a_name=hello,%20world`
+`&a_icon=c.png`
+
+(hopefully) resulting in:
+
+    {
+        "errors": []
+    }
 
 ###Parameters
 
