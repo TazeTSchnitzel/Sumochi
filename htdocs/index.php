@@ -122,8 +122,10 @@ switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
         }
     break;
     case 'login':
-    default:
+    case '':
         echo $htmlhead;
         echo $loginform;
+    default:
+        header("HTTP/1.0 404 Not Found");
     break;
 }
