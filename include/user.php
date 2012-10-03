@@ -1,5 +1,7 @@
 <?php
 
+require_once 'secrets.php';
+
 function user_filename($username) {
     return '../users/' . hash('sha256', $username);
 }
@@ -31,6 +33,32 @@ function user_get_achievements($username) {
     } else {
         return NULL;
     }
+}
+
+// checks if a key is valid
+function user_validate_key($server_key) {
+    global $permissable_keys;
+    
+    // valid key
+    if (array_key_exists($server_key, $permissable_keys)) {
+        return TRUE;
+    }
+    return FALSE;
+}
+
+// checks if an achievement is valid
+function user_validate_achievement($server_key, $achievement_id) {
+    global $permissable_keys;
+    
+    // valid key
+    if (array_key_exists($server_key, $permissable_keys)) {
+        // valid key for achievement
+        $ids = $permissable_keys[$server_key];
+        if (array_search($achievement_id, $ids) !== FALSE) {
+            return TRUE;
+        }
+    }
+    return FALSE;
 }
 
 // generates a user login token (and stores it)

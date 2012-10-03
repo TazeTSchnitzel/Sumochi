@@ -28,7 +28,7 @@ EOT;
 switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
     case 'api_give_achievement':
         if (user_check_logintoken($_GET['user'], $_GET['token'])) {
-            if (in_array($_GET['a_key'], $permissable_keys, true)) {
+            if (user_validate_key($_GET['key'])) {
                 if (isset($_GET['a_icon'])) {
                     $result = user_give_achievement($_GET['user'], $_GET['a_id'], $_GET['a_name'], $_GET['a_key'], $_GET['a_icon']);
                 } else {
@@ -61,7 +61,7 @@ switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
     case 'api_login':
         if (($PHPSESSID = gg2_login($_GET['user'], $_GET['password'])) !== FALSE) {
             if (user_exists($_GET['user'])) {
-                if (in_array($_GET['key'], $permissable_keys, true)) {
+                if (user_validate_key($_GET['key'])) {
                     $token = user_gen_logintoken($_GET['user'], $PHPSESSID, $_GET['key']);
                     echo json_encode([
                         'result' => [
