@@ -62,10 +62,10 @@ function user_validate_achievement($server_key, $achievement_id) {
 }
 
 // generates a user login token (and stores it)
-function user_gen_logintoken($username, $PHPSESSID, $server_key) {
+function user_gen_logintoken($username, $PHPSESSID) {
     $obj = user_get_object($username);
     if ($obj !== NULL) {
-        $token = hash('sha256', $username + $PHPSESSID + $server_key);
+        $token = hash('sha256', $username + $PHPSESSID);
         $obj->lastLoginToken = $token;
         user_set_object($username, $obj);
         return $token;

@@ -30,9 +30,9 @@ switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
         if (user_check_logintoken($_GET['user'], $_GET['token'])) {
             if (user_validate_key($_GET['key'])) {
                 if (isset($_GET['a_icon'])) {
-                    $result = user_give_achievement($_GET['user'], $_GET['a_id'], $_GET['a_name'], $_GET['a_key'], $_GET['a_icon']);
+                    $result = user_give_achievement($_GET['user'], $_GET['a_id'], $_GET['a_name'], $_GET['key'], $_GET['a_icon']);
                 } else {
-                    $result = user_give_achievement($_GET['user'], $_GET['a_id'], $_GET['a_name'], $_GET['a_key']);
+                    $result = user_give_achievement($_GET['user'], $_GET['a_id'], $_GET['a_name'], $_GET['key']);
                 }
                 if ($result === FALSE) {
                     echo json_encode([
@@ -61,19 +61,13 @@ switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
     case 'api_login':
         if (($PHPSESSID = gg2_login($_GET['user'], $_GET['password'])) !== FALSE) {
             if (user_exists($_GET['user'])) {
-                if (user_validate_key($_GET['key'])) {
-                    $token = user_gen_logintoken($_GET['user'], $PHPSESSID, $_GET['key']);
-                    echo json_encode([
-                        'result' => [
-                            'token' => $token
-                         ],
-                        'errors' => []
-                    ]);
-                } else {
-                    echo json_encode([
-                        'errors' => ['unknown_key']
-                    ]);
-                }
+                $token = user_gen_logintoken($_GET['user'], $PHPSESSID);
+                echo json_encode([
+                    'result' => [
+                        'token' => $token
+                     ],
+                    'errors' => []
+                ]);
             } else {
                 echo json_encode([
                     'errors' => ['no_sumochi_user']
@@ -129,3 +123,4 @@ switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
         header("HTTP/1.0 404 Not Found");
     break;
 }
+echo "\n";
