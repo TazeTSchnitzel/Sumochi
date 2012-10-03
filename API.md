@@ -17,11 +17,7 @@ API Methods
 
 ###Example
 
-`http://smoke.ajf.me/`
-`?p=api_login`
-`&user=joe`
-`&password=foobar`
-`&key=SERVER_SECRET_KEY`
+    http://smoke.ajf.me/?p=api_login&user=joe&password=foobar
 
 (hopefully) resulting in:
 
@@ -52,14 +48,7 @@ If it succeeds, `result` will be a JSON object with a single key, `token`, the l
 
 ###Example
 
-`http://smoke.ajf.me/`
-`?p=api_give_achievement`
-`&user=joe`
-`&token=XXX13`
-`&a_key=SERVER_SECRET_KEY`
-`&a_id=joesmod_1`
-`&a_name=hello,%20world`
-`&a_icon=c.png`
+    http://smoke.ajf.me/?p=api_give_achievement&user=joe&token=XXX13&key=SERVER_SECRET_KEY&a_id=joesmod_1&a_name=hello,%20world&a_icon=c.png
 
 (hopefully) resulting in:
 
