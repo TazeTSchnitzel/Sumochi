@@ -35,48 +35,29 @@ switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
                     $result = user_give_achievement($_GET['user'], $_GET['a_id'], $_GET['a_name'], $_GET['key']);
                 }
                 if ($result === FALSE) {
-                    echo json_encode([
-                        'errors' => ['already_has_achievement']
-                    ]);
+                    echo 'ERROR already_has_achievement';
                 } else if ($result === NULL) {
-                    echo json_encode([
-                        'errors' => ['unknown_error']
-                    ]);
+                    echo 'ERROR unknown_error';
                 } else {
-                    echo json_encode([
-                        'errors' => []
-                    ]);
+                    echo 'ERROR errors';
                 }
             } else {
-                echo json_encode([
-                    'errors' => ['unknown_key']
-                ]);
+                echo 'ERROR unknown_key';
             }
         } else {
-            echo json_encode([
-                'errors' => ['invalid_token']
-            ]);
+            echo 'ERROR invalid_token';
         }
     break;
     case 'api_login':
         if (($PHPSESSID = gg2_login($_GET['user'], $_GET['password'])) !== FALSE) {
             if (user_exists($_GET['user'])) {
                 $token = user_gen_logintoken($_GET['user'], $PHPSESSID);
-                echo json_encode([
-                    'result' => [
-                        'token' => $token
-                     ],
-                    'errors' => []
-                ]);
+                echo "SUCCESS $token";
             } else {
-                echo json_encode([
-                    'errors' => ['no_sumochi_user']
-                ]);
+                echo 'ERROR no_sumochi_user';
             }
         } else {
-            echo json_encode([
-                'errors' => ['gg2_login_failed']
-            ]);
+            echo 'ERROR gg2_login_failed';
         }
     break;
     case 'display':

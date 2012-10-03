@@ -7,7 +7,15 @@ They should be made to the URL `http://sumochi.ajf.me/` if you couldn't figure t
 
 The URL parameter `p` specifies which API method is to be called.
 
-API methods return a JSON object with two keys. The first, `result`, is a JSON object containing result data. This key is only available on some methods, and only when the operation has succeeded. The other, `errors`, is a JSON list. If it is empty, you can assume the operation succeeded.
+API methods return a string with two parts, separated by a space. The first is either `SUCCESS` or `ERROR`. The second is result data, or the error name. There will be a new line (LF) at the end of it.
+
+An example of an error:
+
+    ERROR gg2_login_failed
+    
+An example of a success:
+
+    SUCCESS XXX123
 
 API Methods
 ===========
@@ -21,21 +29,16 @@ API Methods
 
 (hopefully) resulting in:
 
-    {
-        "result": {
-            "token": "XXX123"
-        },
-        "errors": []
-    }
+    SUCCESS XXX123
 
 ###Parameters
 
 * `user` - username of user to log in for
 * `password` - password of said user
 
-###Result object
+###Result portion
 
-If it succeeds, `result` will be a JSON object with a single key, `token`, the login token needed to use some other API methods.
+If it succeeds, the result part of the string will be the login token needed to use some other API methods.
 
 ###Possible error values
 
@@ -52,9 +55,7 @@ If it succeeds, `result` will be a JSON object with a single key, `token`, the l
 
 (hopefully) resulting in:
 
-    {
-        "errors": []
-    }
+    SUCCESS
 
 ###Parameters
 
