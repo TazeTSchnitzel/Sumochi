@@ -65,7 +65,7 @@ switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
         
         // output signature image
         if ($achievements !== NULL) {
-            render_profile($achievements);
+            render_profile($_GET['user'], $achievements);
         } else {
             header('Location: error.png');
             die();
