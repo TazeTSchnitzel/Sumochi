@@ -42,12 +42,12 @@ switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
                 } else {
                     $result = user_give_achievement($_GET['user'], $_GET['a_id'], $_GET['a_name'], $_GET['key']);
                 }
-                if ($result === FALSE) {
+                if ($result === TRUE) {
+                    echo 'SUCCESS';
+                } else if ($result === FALSE) {
                     echo 'ERROR already_has_achievement';
-                } else if ($result === NULL) {
-                    echo 'ERROR unknown_error';
                 } else {
-                    echo 'ERROR errors';
+                    echo 'ERROR unknown_error';
                 }
             } else {
                 echo 'ERROR unknown_key';
@@ -55,6 +55,24 @@ switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
         } else {
             echo 'ERROR invalid_token';
         }
+    break;
+    case 'api_has_achievement':
+        if (user_check_logintoken($_GET['user'], $_GET['token'])) {
+            if (user_validate_key($_GET['key'])) {
+                $result = user_has_achievement($_GET['user'], $_GET['a_id']);
+                if ($result === TRUE) {
+                    echo 'SUCCESS TRUE';
+                } else if ($result === FALSE) {
+                    echo 'SUCCESS FALSE';
+                } else {
+                    echo 'ERROR unknown_error';
+                }
+            } else {
+                echo 'ERROR unknown_key';
+            }
+        } else {
+            echo 'ERROR invalid_token';
+        }    
     break;
     case 'api_login':
         if (($PHPSESSID = gg2_login($_GET['user'], $_GET['password'])) !== FALSE) {

@@ -73,6 +73,35 @@ If it succeeds, the result part of the string will be the login token needed to 
 * `invalid_token` - invalid login token
 * `unknown_error` - unknown internal error
 
+`api_has_achievement`
+----------------------
+
+###Example
+
+    http://smoke.ajf.me/?p=api_has_achievement&user=joe&token=XXX13&key=SERVER_SECRET_KEY&a_id=joesmod_1
+
+resulting in:
+
+    SUCCESS TRUE
+
+###Parameters
+
+* `user` - username of user to give achievement to
+* `token` - login token
+* `key` - server's secret key (must be obtained by permission)
+* `a_id` - ID value for achievement
+
+###Possible result values
+
+* `TRUE` - user has this achievement
+* `FALSE` - user doesn't have this achievement
+
+###Possible error values
+
+* `unknown_key` - unrecognised secret key
+* `invalid_token` - invalid login token
+* `unknown_error` - unknown internal error
+
 GML Scripts
 ===========
 

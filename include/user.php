@@ -88,6 +88,21 @@ function user_check_logintoken($username, $token) {
     }
 }
 
+// checks if a user has an achievement
+function user_has_achievement($username, $a_id) {
+    $obj = user_get_object($username);
+    if ($obj !== NULL) {
+        foreach ($obj->achievements as $achievement) {
+            if ($achievement->id == $a_id) {
+                return TRUE;
+            }
+        }
+        return FALSE;
+    } else {
+        return NULL;
+    }
+}
+
 // gives user achievement
 function user_give_achievement($username, $a_id, $a_name, $a_key, $a_icon=NULL) {
     $obj = user_get_object($username);
