@@ -196,6 +196,7 @@ Return value should be a string. If it's empty, something probably went wrong.
         text = '';
         while (!file_text_eof(handle)) {
             text += file_text_read_string(handle);
+            file_text_readln(handle);
         }
         file_text_close(handle);
         file_delete(tempfile);
