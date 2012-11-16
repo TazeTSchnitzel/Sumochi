@@ -23,8 +23,9 @@ EOT;
 $loginform = <<<EOT
 <form method=POST action=/>
     <h1>Welcome to sumochi</h1>
-    <p>Sumochi uses your existing GG2 forum details. Log in with them below to add an achievements list to your forum signature. (If you remove it, just log in again - you won't lose your achievements)</p>
-    <p>Once you've logged in for the first time, you will be able to use your forum details to earn achievements on approved GG2 servers.</p>
+    <p>Sumochi uses your existing GG2 forum details.<p>
+    <p>Logging in below will replace your forum signature with an achievements list and create (or update) your sumochi account. (If you remove the list, just log in again - you won't lose your achievements)</p>
+    <p>Once you've logged in for the first time, which creates your sumochi account, you will be able to use your forum details to earn achievements on approved GG2 servers.</p>
     <input type=hidden name=p value=dologin>
     Username: <input type=text name=username><br>
     Password: <input type=password name=password><br>
@@ -88,10 +89,15 @@ switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
     break;
     case 'display':
         $achievements = user_get_achievements($_GET['user']);
+        $displayname = user_get_displayname($_GET['user']);
         
         // output signature image
         if ($achievements !== NULL) {
-            render_profile($_GET['user'], $achievements);
+            if ($displayname !== NULL) {
+                render_profile($displayname, $achievements);
+            } else {
+                render_profile('[profile display name unknown]', $achievements);
+            }
         } else {
             header('Location: error.png');
             die();
@@ -99,17 +105,21 @@ switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
     break;
     case 'list':
         $achievements = user_get_achievements($_GET['user']);
+        $displayname = user_get_displayname($_GET['user']);
         
         if ($achievements !== NULL) {
             echo $htmlhead;
-            echo "<h1>sumochi - " . htmlspecialchars($_GET['user']) . "</h1>\n";
+            if ($displayname !== NULL) {
+                echo "<h1>sumochi - " . htmlspecialchars($displayname) . "</h1>\n";
+            } else {
+                echo "<h1>sumochi - [profile display name unknown]</h1>\n";
+            }
             
             $count = count($achievements);
             echo "<h2>Achievements ($count total)</h2>\n";
             
             if ($count === 0) {
                 echo "<span class=none>none</span>";
-                imageString($im, 3, 8, 36, 'none', $red);
             } else {
                 echo "<ul class=achievements>\n";
                 foreach ($achievements as $obj) {
@@ -142,9 +152,16 @@ switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
         $password = $_POST['password'];
         if (($PHPSESSID = gg2_login($username, $password)) !== FALSE) {
             echo "Successful login!<br>";
+
+            // get profile name
+            $profilename = gg2_get_profilename($PHPSESSID);
             
             // create user file if non-existant
-            user_create($username);
+            if (user_create_or_update($username, $profilename)) {
+                echo "Created sumochi account.<br>";
+            } else {
+                echo "Updated existing sumochi account.<br>";
+            }
             
             // generate (self-referential) signature image URL
             $img_url = where_am_i() . '?p=display&user=' . urlencode($username);
@@ -156,7 +173,7 @@ switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
             $sig = '[url='.$url.'][img]'.$img_url.'[/img][/url]';
             gg2_change_signature($PHPSESSID, $sig);
             
-            echo "Achievements list now in signature.<br>";
+            echo "Signature replaced with achievements list.<br>";
         } else {
             echo "Failed login!<br>";
         }
@@ -166,6 +183,7 @@ switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
         echo $htmlhead;
         echo $loginform;
         echo $htmlfoot;
+    break;
     default:
         header("HTTP/1.0 404 Not Found");
     break;

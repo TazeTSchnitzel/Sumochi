@@ -3,14 +3,14 @@
 require_once 'user.php';
 
 // Renders a profile, durp.
-function render_profile($username, $achievements) {
+function render_profile($displayname, $achievements) {
     $im = imageCreateFromPNG('../media/bg.png');
     imageSaveAlpha($im, 1);
     
     $white = imageColorAllocate($im, 255, 255, 255);
     $red = imageColorAllocate($im, 255, 0, 0);
     
-    imageString($im, 2, 4, 4, "sumochi - $username", $white);
+    imageString($im, 2, 4, 4, "sumochi - $displayname", $white);
     
     $count = count($achievements);
     imageString($im, 4, 4, 20, "Most Recent Achievements ($count total)", $white);

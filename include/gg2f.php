@@ -47,6 +47,31 @@ function gg2_login($username, $password) {
     }
 }
 
+// Tries to grab someone's name from their profile
+// Probably can't fail (?)
+function gg2_get_profilename($PHPSESSID) {
+    $ch = curl_init();
+
+    // Profile page
+    curl_setopt($ch, CURLOPT_URL, 'http://ganggarrison.com/forums/index.php?action=profile;PHPSESSID=' . $PHPSESSID);
+
+    // Silence (don't want to output returned page html to end-user)
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+    $result = curl_exec($ch);
+
+    curl_close($ch);
+
+    // Find profile name
+    $needle = "\t\t\tSummary - ";
+    file_put_contents('debug.txt', $result);
+    $pos = strpos($result, $needle);
+    $pos2 = strpos($result, "\n", $pos);
+    $sc = substr($result, $pos + strlen($needle), $pos2 - $pos - strlen($needle));
+
+    return $sc;
+}
+
 // Tries to change GG2 Forum signature
 // Success is assumed (!)
 function gg2_change_signature($PHPSESSID, $sig) {

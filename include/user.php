@@ -25,6 +25,17 @@ function user_set_object($username, $obj) {
     file_put_contents($fn, json_encode($obj));
 }
 
+// gets user display name
+function user_get_displayname($username) {
+    $obj = user_get_object($username);
+    if ($obj !== NULL) {
+        if (property_exists($obj, 'displayName')) {
+            return $obj->displayName;
+        }
+    }
+    return NULL;
+}
+
 // gets list of user achievements
 function user_get_achievements($username) {
     $obj = user_get_object($username);
@@ -130,12 +141,19 @@ function user_give_achievement($username, $a_id, $a_name, $a_key, $a_icon=NULL) 
 }
 
 // creates user
-function user_create($username) {
-    $fn = user_filename($username);
-    if (!file_exists($fn)) {
-        file_put_contents($fn, json_encode([
+function user_create_or_update($username, $displayname) {
+    $obj = user_get_object($username);
+    if ($obj === NULL) {
+        $fn = user_filename($username);
+        file_put_contents(user_filename($username), json_encode([
             'achievements' => [],
-            'lastLoginToken' => NULL 
+            'lastLoginToken' => NULL,
+            'displayName' => $displayname
         ]));
+        return true;
+    } else {
+        $obj->displayName = $displayname;
+        user_set_object($username, $obj);
+        return false;
     }
 }
