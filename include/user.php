@@ -114,6 +114,26 @@ function user_has_achievement($username, $a_id) {
     }
 }
 
+// checks if a user has some achievements
+function user_has_achievements($username, $a_ids) {
+    $obj = user_get_object($username);
+    if ($obj !== NULL) {
+        $results = [];
+        foreach ($a_ids as $a_id) {
+            $result = FALSE;
+            foreach ($obj->achievements as $achievement) {
+                if ($achievement->id == $a_id) {
+                    $result = TRUE;
+                }
+            }
+            $results[] = $result;
+        }
+        return $results;
+    } else {
+        return NULL;
+    }
+}
+
 // gives user achievement
 function user_give_achievement($username, $a_id, $a_name, $a_key, $a_icon=NULL) {
     $obj = user_get_object($username);

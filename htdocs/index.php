@@ -75,6 +75,31 @@ switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
             echo 'ERROR invalid_token';
         }    
     break;
+    case 'api_has_achievements':
+        if (user_check_logintoken($_GET['user'], $_GET['token'])) {
+            if (user_validate_key($_GET['key'])) {
+                $result = user_has_achievements($_GET['user'], explode(',', $_GET['a_ids']));
+                if ($result) {
+                    echo 'SUCCESS ';
+                    $results = [];
+                    foreach ($result as $i) {
+                        if ($i === TRUE) {
+                            $results[] = 'TRUE';
+                        } else if ($i === FALSE) {
+                            $results[] = 'FALSE';
+                        }
+                    }
+                    echo implode(',', $results);
+                } else {
+                    echo 'ERROR unknown_error';
+                }
+            } else {
+                echo 'ERROR unknown_key';
+            }
+        } else {
+            echo 'ERROR invalid_token';
+        }
+    break;
     case 'api_login':
         if (($PHPSESSID = gg2_login($_GET['user'], $_GET['password'])) !== FALSE) {
             if (user_exists($_GET['user'])) {

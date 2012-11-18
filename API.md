@@ -23,6 +23,8 @@ API Methods
 `api_login`
 -----------
 
+Logs in the user.
+
 ###Example
 
     http://smoke.ajf.me/?p=api_login&user=joe&password=foobar
@@ -49,6 +51,8 @@ If it succeeds, the result part of the string will be the login token needed to 
 `api_give_achievement`
 ----------------------
 
+Gives the user an achievement.
+
 ###Example
 
     http://smoke.ajf.me/?p=api_give_achievement&user=joe&token=XXX13&key=SERVER_SECRET_KEY&a_id=joesmod_1&a_name=hello,%20world&a_icon=c.png
@@ -73,8 +77,43 @@ If it succeeds, the result part of the string will be the login token needed to 
 * `invalid_token` - invalid login token
 * `unknown_error` - unknown internal error
 
+`api_has_achievements`
+----------------------
+
+Checks if the user has several achievements.
+
+###Example
+
+    http://smoke.ajf.me/?p=api_has_achievements&user=joe&token=XXX13&key=SERVER_SECRET_KEY&a_ids=joesmod_1,joesmod_7
+
+resulting in:
+
+    SUCCESS TRUE,FALSE
+
+###Parameters
+
+* `user` - username of user to give achievement to
+* `token` - login token
+* `key` - server's secret key (must be obtained by permission)
+* `a_ids` - ID values of the achievements, comma-separated, no spacing or trailing commas
+
+###Possible result values
+
+For each value:
+
+* `TRUE` - user has this achievement
+* `FALSE` - user doesn't have this achievement
+
+###Possible error values
+
+* `unknown_key` - unrecognised secret key
+* `invalid_token` - invalid login token
+* `unknown_error` - unknown internal error
+
 `api_has_achievement`
 ----------------------
+
+Checks if the user has an achievement.
 
 ###Example
 
@@ -104,6 +143,70 @@ resulting in:
 
 GML Scripts
 ===========
+
+To assist in dealing with comma-separated lists, here's a function to go from a comma separated string to a GML list:
+
+`sumochi_parse_csv`
+-------------------
+
+###Usage
+
+    sumochi_parse_csv(csv);
+
+###Parameters
+
+* `csv` - a set of comma-separated values, e.g. `1,2,3`
+
+###Return value
+
+Returns a GML list (to be used with `ds_list` functions).
+
+###Function source
+
+    var list;
+    var text;
+
+    list = ds_list_create();
+    text = argument0;
+
+    while (string_pos(",", text) != 0) {
+        ds_list_add(list, string_copy(text,0,string_pos(",",text)-1));
+        text = string_copy(text,string_pos(",",text)+1,string_length(text)-string_pos(",",text));
+    }
+    if (string_length(text) > 0) {
+        ds_list_add(list, text);
+    }
+
+    return list;
+
+And here's a function to go from a GML list to a comma-separated string:
+
+`sumochi_make_csv`
+------------------
+
+###Usage
+
+    sumochi_make_csv(list);
+
+###Parameters
+
+* `list` - a GML list (used with `ds_list` functions).
+
+###Function source
+
+    var list;
+    var i;
+
+    list = "";
+
+    for (i = 0; i < ds_list_size(argument0); i+=1) {
+        list = list + ds_list_find_value(argument0, i);
+        if (i != ds_list_size(argument0)-1) {
+            list = list + ",";
+        }
+    }
+
+    return list;
 
 To assist in using the Sumochi API from GML, here is a function to call a sumochi method:
 
