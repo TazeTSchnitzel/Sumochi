@@ -68,7 +68,7 @@ Gives the user an achievement.
 * `key` - server's secret key (must be obtained by permission)
 * `a_id` - ID value for achievement - if another achievement with same ID exists, giving this achievement will fail with `already_has_achievement`. Recommended to use prefixes to reduce chance of accidental collision, e.g. `ajf_mod_1` not just `1`.
 * `a_name` - Name of the achievement. Try to keep it ASCII, the font rendering may barf.
-* `a_icon` - (optional) - references by name an icon **stored on the sumochi server** (it **cannot** be an external URL). Again, you'll have to ask me to add it. Some defaults include `baby.png` (overweight taunt icon), `c.png` (K&R C icon), `eyes.png` (eyes), `sandvich.png` (gg2 sandvich icon) and `test.png` (question mark)
+* `a_icon` - (optional) - references by name an icon **stored on the sumochi server** (it **cannot** be an external URL). You'll have to ask me to upload it.
 
 ###Possible error values
 
