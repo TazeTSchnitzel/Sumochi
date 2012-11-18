@@ -27,7 +27,7 @@ Logs in the user.
 
 ###Example
 
-    http://smoke.ajf.me/?p=api_login&user=joe&password=foobar
+    http://sumochi.ajf.me/?p=api_login&user=joe&password=foobar
 
 (hopefully) resulting in:
 
@@ -55,7 +55,7 @@ Gives the user an achievement.
 
 ###Example
 
-    http://smoke.ajf.me/?p=api_give_achievement&user=joe&token=XXX13&key=SERVER_SECRET_KEY&a_id=joesmod_1&a_name=hello,%20world&a_icon=c.png
+    http://sumochi.ajf.me/?p=api_give_achievement&user=joe&token=XXX13&key=SERVER_SECRET_KEY&a_id=joesmod_1&a_name=hello,%20world&a_icon=c.png
 
 (hopefully) resulting in:
 
@@ -68,7 +68,7 @@ Gives the user an achievement.
 * `key` - server's secret key (must be obtained by permission)
 * `a_id` - ID value for achievement - if another achievement with same ID exists, giving this achievement will fail with `already_has_achievement`. Recommended to use prefixes to reduce chance of accidental collision, e.g. `ajf_mod_1` not just `1`.
 * `a_name` - Name of the achievement. Try to keep it ASCII, the font rendering may barf.
-* `a_icon` - (optional) - references by name an icon stored on Sumochi server. Again, you'll have to ask me to add it. Some defaults include `baby.png` (overweight taunt icon), `c.png` (K&R C icon), `eyes.png` (eyes), `sandvich.png` (gg2 sandvich icon) and `test.png` (question mark)
+* `a_icon` - (optional) - references by name an icon **stored on the sumochi server** (it **cannot** be an external URL). Again, you'll have to ask me to add it. Some defaults include `baby.png` (overweight taunt icon), `c.png` (K&R C icon), `eyes.png` (eyes), `sandvich.png` (gg2 sandvich icon) and `test.png` (question mark)
 
 ###Possible error values
 
@@ -84,7 +84,7 @@ Checks if the user has several achievements.
 
 ###Example
 
-    http://smoke.ajf.me/?p=api_has_achievements&user=joe&token=XXX13&key=SERVER_SECRET_KEY&a_ids=joesmod_1,joesmod_7
+    http://sumochi.ajf.me/?p=api_has_achievements&user=joe&token=XXX13&key=SERVER_SECRET_KEY&a_ids=joesmod_1,joesmod_7
 
 resulting in:
 
@@ -117,7 +117,7 @@ Checks if the user has an achievement.
 
 ###Example
 
-    http://smoke.ajf.me/?p=api_has_achievement&user=joe&token=XXX13&key=SERVER_SECRET_KEY&a_id=joesmod_1
+    http://sumochi.ajf.me/?p=api_has_achievement&user=joe&token=XXX13&key=SERVER_SECRET_KEY&a_id=joesmod_1
 
 resulting in:
 
