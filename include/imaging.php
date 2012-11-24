@@ -9,8 +9,12 @@ function render_profile($displayname, $achievements) {
     
     $white = imageColorAllocate($im, 255, 255, 255);
     $red = imageColorAllocate($im, 255, 0, 0);
-    
-    imageString($im, 2, 4, 4, "sumochi - $displayname", $white);
+
+    $logo = imageCreateFromPNG('../media/logo.png');
+    imageSaveAlpha($logo, 1);
+
+    imageCopy($im, $logo, 2, 4, 0, 0, imageSX($logo), imageSY($logo));
+    imageString($im, 2, 22, 4, "sumochi - $displayname", $white);
     
     $count = count($achievements);
     imageString($im, 4, 4, 20, "Most Recent Achievements ($count total)", $white);

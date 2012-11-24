@@ -13,6 +13,7 @@ $htmlhead = <<<EOT
 <!doctype html>
 <meta charset=utf-8>
 <link rel=stylesheet href=style.css>
+<link rel="shortcut icon" href=/favicon.ico>
 <div class=main>
 
 EOT;
@@ -24,7 +25,7 @@ EOT;
 
 $loginform = <<<EOT
 <form method=POST action=/>
-    <h1>Welcome to sumochi</h1>
+    <h1><img src=/favicon.ico alt=""> Welcome to sumochi</h1>
     <p>Sumochi uses your existing GG2 forum details.<p>
     <p>Logging in below will replace your forum signature with an achievements list and create (or update) your sumochi account. (If you remove the list, just log in again - you won't lose your achievements)</p>
     <p>Once you've logged in for the first time, which creates your sumochi account, you will be able to use your forum details to earn achievements on approved GG2 servers.</p>
@@ -137,9 +138,9 @@ switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
         if ($achievements !== NULL) {
             echo $htmlhead;
             if ($displayname !== NULL) {
-                echo "<h1>sumochi - " . htmlspecialchars($displayname) . "</h1>\n";
+                echo "<h1><img src=/favicon.ico alt=\"\"> sumochi - " . htmlspecialchars($displayname) . "</h1>\n";
             } else {
-                echo "<h1>sumochi - [profile display name unknown]</h1>\n";
+                echo "<h1><img src=/favicon.ico alt=\"\"> sumochi - [profile display name unknown]</h1>\n";
             }
             
             $count = count($achievements);
