@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set('UTC');
+
 require_once '../include/gg2f.php';
 require_once '../include/imaging.php';
 require_once '../include/user.php';
@@ -160,6 +162,7 @@ switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
                         echo "<img src=\"$base64URL\" alt=\"icon\">\n";
                     }
                     echo $prepend . htmlspecialchars($obj->name) . "\n";
+                    echo '(<time>' . date('Y-m-d', $obj->timestamp) ."</time>)\n";
                     echo "</li>\n";
                 }
                 echo "</ul>\n";
