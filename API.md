@@ -80,7 +80,7 @@ Gives the user an achievement.
 `api_has_achievements`
 ----------------------
 
-Checks if the user has several achievements.
+Checks if the user has several achievements. Invalid achievements are ignored (i.e. they will result in `FALSE`).
 
 ###Example
 
@@ -113,7 +113,7 @@ For each value:
 `api_has_achievement`
 ----------------------
 
-Checks if the user has an achievement.
+Checks if the user has an achievement. Invalid achievements are ignored (i.e. they will result in `FALSE`).
 
 ###Example
 

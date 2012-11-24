@@ -104,7 +104,7 @@ function user_has_achievement($username, $a_id) {
     $obj = user_get_object($username);
     if ($obj !== NULL) {
         foreach ($obj->achievements as $achievement) {
-            if ($achievement->id == $a_id) {
+            if ($achievement->id == $a_id && user_validate_achievement($achievement->key, $achievement->id)) {
                 return TRUE;
             }
         }
@@ -122,7 +122,7 @@ function user_has_achievements($username, $a_ids) {
         foreach ($a_ids as $a_id) {
             $result = FALSE;
             foreach ($obj->achievements as $achievement) {
-                if ($achievement->id == $a_id) {
+                if ($achievement->id == $a_id && user_validate_achievement($achievement->key, $achievement->id)) {
                     $result = TRUE;
                 }
             }
