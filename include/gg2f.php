@@ -64,7 +64,6 @@ function gg2_get_profilename($PHPSESSID) {
 
     // Find profile name
     $needle = "\t\t\tSummary - ";
-    file_put_contents('debug.txt', $result);
     $pos = strpos($result, $needle);
     $pos2 = strpos($result, "\n", $pos);
     $sc = substr($result, $pos + strlen($needle), $pos2 - $pos - strlen($needle));
