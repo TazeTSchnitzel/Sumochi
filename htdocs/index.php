@@ -14,6 +14,9 @@ $htmlhead = <<<EOT
 <meta charset=utf-8>
 <link rel=stylesheet href=style.css>
 <link rel="shortcut icon" href=/favicon.ico>
+
+<link rel=stylesheet href="http://ajf.me/bar.css">
+<iframe src="http://ajf.me/bar.html" id=ajf-bar></iframe>
 <div class=main>
 
 EOT;
