@@ -47,7 +47,11 @@ function render_profile($displayname, $achievements) {
             $y += 14;
         }
     }
-    
+
+    $rotated = imageRotate($im, 180, $white);
+    imageDestroy($im);
+    $im = $rotated;
+
     header('Content-type: image/png');
     imagePNG($im);
     imageDestroy($im);
