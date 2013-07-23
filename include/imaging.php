@@ -4,6 +4,8 @@ require_once 'user.php';
 
 // Renders a profile, durp.
 function render_profile($displayname, $achievements) {
+    global $achievement_types;
+
     $im = imageCreateFromPNG('../media/bg.png');
     imageSaveAlpha($im, 1);
     
@@ -33,16 +35,17 @@ function render_profile($displayname, $achievements) {
                 $prepend = '[INVALID] ';
                 $color = $red;
             }
-            if (property_exists($obj, 'icon')) {
-                $icon = imageCreateFromPNG('../media/icons/' . basename($obj->icon));
+            $data = $achievement_types[$obj->id];
+            if (array_key_exists('icon', $data)) {
+                $icon = imageCreateFromPNG('../media/icons/' . $data['icon']);
                 imageSaveAlpha($icon, 1);
-                imageString($im, 3, 16, $y, $prepend . $obj->name, $color);
+                imageString($im, 3, 16, $y, $prepend . $data['name'], $color);
                 
                 imageCopy($im, $icon, 2, $y, 0, 0, imageSX($icon), imageSY($icon));
                 
                 imageDestroy($icon);
             } else {
-                imageString($im, 3, 4, $y, $prepend . $obj->name, $color);
+                imageString($im, 3, 4, $y, $prepend . $data['name'], $color);
             }
             $y += 14;
         }

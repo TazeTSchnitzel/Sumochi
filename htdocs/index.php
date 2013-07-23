@@ -42,11 +42,7 @@ switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
     case 'api_give_achievement':
         if (user_check_logintoken($_GET['user'], $_GET['token'])) {
             if (user_validate_key($_GET['key'])) {
-                if (isset($_GET['a_icon'])) {
-                    $result = user_give_achievement($_GET['user'], $_GET['a_id'], $_GET['a_name'], $_GET['key'], $_GET['a_icon']);
-                } else {
-                    $result = user_give_achievement($_GET['user'], $_GET['a_id'], $_GET['a_name'], $_GET['key']);
-                }
+                $result = user_give_achievement($_GET['user'], $_GET['a_id'], $_GET['key']);
                 if ($result === TRUE) {
                     echo 'SUCCESS';
                 } else if ($result === FALSE) {
@@ -159,12 +155,14 @@ switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
                         echo "<li class=invalid>\n";
                         $prepend = '[INVALID] ';
                     }
-                    if (property_exists($obj, 'icon')) {
-                        $base64URL = 'data:image/png;base64,' . base64_encode(file_get_contents('../media/icons/' . basename($obj->icon)));
+                    $data = $achievement_types[$obj->id];
+                    if (array_key_exists('icon', $data)) {
+                        $base64URL = 'data:image/png;base64,' . base64_encode(file_get_contents('../media/icons/' . $data['icon']));
                         echo "<img src=\"$base64URL\" alt=\"icon\">\n";
                     }
-                    echo $prepend . htmlspecialchars($obj->name) . "\n";
+                    echo $prepend . htmlspecialchars($data['name']) . "\n";
                     echo '(<time>' . date('Y-m-d', $obj->timestamp) ."</time>)\n";
+                    echo '<p>' . htmlspecialchars($data['description']) . '</p>' . "\n";
                     echo "</li>\n";
                 }
                 echo "</ul>\n";

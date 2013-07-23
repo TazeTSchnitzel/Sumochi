@@ -1,0 +1,9 @@
+{
+    "achievements": {
+        "icontest": {
+            "name": "A. Test.",
+            "icon": "icon.png",
+            "description": "Did something noteworthy"
+        }
+    }
+}

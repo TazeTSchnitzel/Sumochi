@@ -2,6 +2,8 @@
 
 require_once 'secrets.php';
 
+$achievement_types = json_decode(file_get_contents('../include/achievements.json'), true)['achievements'];
+
 function user_filename($username) {
     return '../users/' . hash('sha256', $username);
 }
@@ -59,7 +61,12 @@ function user_validate_key($server_key) {
 
 // checks if an achievement is valid
 function user_validate_achievement($server_key, $achievement_id) {
-    global $permissable_keys;
+    global $permissable_keys, $achievement_types;
+
+    // existent achievement ID
+    if (!array_key_exists($achievement_id, $achievement_types)) {
+        return FALSE;
+    }
     
     // valid key
     if (array_key_exists($server_key, $permissable_keys)) {
@@ -135,7 +142,7 @@ function user_has_achievements($username, $a_ids) {
 }
 
 // gives user achievement
-function user_give_achievement($username, $a_id, $a_name, $a_key, $a_icon=NULL) {
+function user_give_achievement($username, $a_id, $a_key) {
     $obj = user_get_object($username);
     if ($obj !== NULL) {
         foreach ($obj->achievements as $achievement) {
@@ -144,14 +151,10 @@ function user_give_achievement($username, $a_id, $a_name, $a_key, $a_icon=NULL) 
             }
         }
         $achievement = [
-            'name' => $a_name,
             'key' => $a_key,
             'id' => $a_id,
             'timestamp' => time()
         ];
-        if ($a_icon !== NULL) {
-            $achievement['icon'] = $a_icon;
-        }
         array_unshift($obj->achievements, $achievement);
         user_set_object($username, $obj);
         return TRUE;

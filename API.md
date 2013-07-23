@@ -55,7 +55,7 @@ Gives the user an achievement.
 
 ###Example
 
-    http://sumochi.ajf.me/?p=api_give_achievement&user=joe&token=XXX13&key=SERVER_SECRET_KEY&a_id=joesmod_1&a_name=hello,%20world&a_icon=c.png
+    http://sumochi.ajf.me/?p=api_give_achievement&user=joe&token=XXX13&key=SERVER_SECRET_KEY&a_id=joesmod_1
 
 (hopefully) resulting in:
 
@@ -67,8 +67,6 @@ Gives the user an achievement.
 * `token` - login token
 * `key` - server's secret key (must be obtained by permission)
 * `a_id` - ID value for achievement - if another achievement with same ID exists, giving this achievement will fail with `already_has_achievement`. Recommended to use prefixes to reduce chance of accidental collision, e.g. `ajf_mod_1` not just `1`.
-* `a_name` - Name of the achievement. Try to keep it ASCII, the font rendering may barf.
-* `a_icon` - (optional) - references by name an icon **stored on the sumochi server** (it **cannot** be an external URL). You'll have to ask me to upload it.
 
 ###Possible error values
 
