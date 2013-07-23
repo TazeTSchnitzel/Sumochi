@@ -160,6 +160,7 @@ switch (isset($_REQUEST['p']) ? $_REQUEST['p'] : '') {
                         $base64URL = 'data:image/png;base64,' . base64_encode(file_get_contents('../media/icons/' . $data['icon']));
                         echo "<img src=\"$base64URL\" alt=\"icon\">\n";
                     }
+                    echo '<span class=game>' . htmlspecialchars($data['game']) . '</span> ';
                     echo $prepend . htmlspecialchars($data['name']) . "\n";
                     echo '(<time>' . date('Y-m-d', $obj->timestamp) ."</time>)\n";
                     echo '<p>' . htmlspecialchars($data['description']) . '</p>' . "\n";

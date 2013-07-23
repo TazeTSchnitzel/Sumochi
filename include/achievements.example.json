@@ -1,6 +1,7 @@
 {
     "achievements": {
         "icontest": {
+            "game": "Sumochi Adventure",
             "name": "A. Test.",
             "icon": "icon.png",
             "description": "Did something noteworthy"

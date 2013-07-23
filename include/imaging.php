@@ -11,6 +11,7 @@ function render_profile($displayname, $achievements) {
     
     $white = imageColorAllocate($im, 255, 255, 255);
     $red = imageColorAllocate($im, 255, 0, 0);
+    $orange = imageColorAllocate($im, 255, 127, 0);
 
     $logo = imageCreateFromPNG('../media/logo.png');
     imageSaveAlpha($logo, 1);
@@ -36,16 +37,23 @@ function render_profile($displayname, $achievements) {
                 $color = $red;
             }
             $data = $achievement_types[$obj->id];
+
+            $game = $data['game'];
+            $gameWidth = imageFontWidth(3) * (strlen($game) + 1);
+
             if (array_key_exists('icon', $data)) {
                 $icon = imageCreateFromPNG('../media/icons/' . $data['icon']);
                 imageSaveAlpha($icon, 1);
-                imageString($im, 3, 16, $y, $prepend . $data['name'], $color);
+
+                imageString($im, 3, 16, $y, $game, $orange);
+                imageString($im, 3, $gameWidth + 16, $y, $prepend . $data['name'], $color);
                 
                 imageCopy($im, $icon, 2, $y, 0, 0, imageSX($icon), imageSY($icon));
                 
                 imageDestroy($icon);
             } else {
-                imageString($im, 3, 4, $y, $prepend . $data['name'], $color);
+                imageString($im, 3, 4, $y, $game, $orange);
+                imageString($im, 3, $gameWidth + 4, $y, $prepend . $data['name'], $color);
             }
             $y += 14;
         }
